@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carousel Example</title>
+  <style>
+    .carousel-container {
+      position: relative;
+      width: 600px; /* ビューポートの幅 */
+      height: 200px; /* ビューポートの高さ */
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.3s ease; /* スライドのアニメーションを追加 */
+      height: 200px;
+    }
+    .carousel-slide {
+      min-width: 200px; /* スライドの幅を設定 */
+      height: 100%;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="carousel-container" id="carousel-container">
+  <div class="carousel-track" id="carousel-track">
+    <div class="carousel-slide" style="background-color: red;">Slide 1</div>
+    <div class="carousel-slide" style="background-color: green;">Slide 2</div>
+    <div class="carousel-slide" style="background-color: blue;">Slide 3</div>
+    <div class="carousel-slide" style="background-color: yellow;">Slide 4</div>
+    <div class="carousel-slide" style="background-color: purple;">Slide 5</div>
+  </div>
+</div>
+<div class="carousel-controls">
+  <button class="carousel-button" id="prev-button">Previous</button>
+  <button class="carousel-button" id="next-button">Next</button>
+</div>
+<script type="module">
+  import { Carousel } from './src/core/Carousel';
+  import { interactiveSwipePlugin } from './src/plugins/interactiveSwipePlugin';
+  import { handleSwipe } from './src/plugins/handleSwipe';
+  import { loopSlides } from './src/plugins/loopSlides';
+
+  const container = document.getElementById('carousel-container');
+  const options = { initialSlide: 0, slidesPerView: 3 }; // スライドの数を3に設定
+  const plugins = [
+    interactiveSwipePlugin,
+    handleSwipe,
+    loopSlides
+  ];
+  const carousel = new Carousel(container, options, plugins);
+
+  document.getElementById('next-button').addEventListener('click', () => {
+    carousel.nextSlide();
+    console.log(carousel.state);
+  });
+
+  document.getElementById('prev-button').addEventListener('click', () => {
+    carousel.prevSlide();
+    console.log(carousel.state);
+  });
+</script>
+</body>
+</html>
